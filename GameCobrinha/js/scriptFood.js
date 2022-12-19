@@ -1,12 +1,15 @@
-let food = {
-    x: 2,
-    y: 0
-}
+import { onSnake, expandSnake } from "./scriptSnake.js";
+import { randomGridPosition } from "./scriptGrid.js";
+
+let food = getRandomFoodPosition();
 
 const EXPANSION_RATE = 1;
 
 export function update() {
-
+    if(onSnake(food)) {
+        expandSnake(EXPANSION_RATE);
+        food = getRandomFoodPosition();
+    }
 }
 
 export function draw(gameBoard) {
@@ -15,4 +18,13 @@ export function draw(gameBoard) {
     foodElement.style.gridRowStart = food.y;
     foodElement.classList.add('food');
     gameBoard.appendChild(foodElement);
+}
+
+function getRandomFoodPosition() {
+    let newFoodPosition;
+    while(newFoodPosition == null || onSnake(newFoodPosition)) {
+        newFoodPosition = randomGridPosition();
+    }
+
+    return newFoodPosition;
 }
