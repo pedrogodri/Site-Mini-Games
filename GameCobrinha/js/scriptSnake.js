@@ -9,6 +9,7 @@ const snakeBody = [
 let newSegments = 0;
 
 export function update() {
+    addSegments();
     const inputDirection = getInputDirection();
     for (let i = snakeBody.length - 2; i >= 0; i--) {
         snakeBody[i + 1] = { ...snakeBody[i] };
@@ -42,4 +43,12 @@ export function onSnake(position) {
     return snakeBody.some((segment, index) => {
         return position.x === segment.x && position.y === segment.y;
     });
+}
+
+export function getSnakeHead() {
+    return snakeBody[0];
+}
+
+export function snakeIntersection() {
+    return onSnake(getSnakeHead())
 }
